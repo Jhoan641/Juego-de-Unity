@@ -14,6 +14,8 @@ public class CreandoMapa : MonoBehaviour
     public Sprite spriteTriangulo;
     public Sprite spriteCirculo;
 
+    public List<GameObject> formasCreadas = new List<GameObject>();
+
     void Start()
     {
         //Dentro de la función de Start() todo se ejecutara al inicio del juego, en esta creamos un bucle for que se ejecutara 3 veces
@@ -51,6 +53,8 @@ public class CreandoMapa : MonoBehaviour
                 CrearFormaHija(new Vector2(iniciox, -0.3f));
             }
         }
+
+        CrearLinea(formasCreadas[1], formasCreadas[3]);
     }
 
     // Esta es la funcion que se usa para crear las figuras
@@ -81,6 +85,24 @@ public class CreandoMapa : MonoBehaviour
         //Le pasamos a el objeto creado la posición local asginado como paremtro en la función
         nuevaForma.transform.localPosition = posicionLocal;
 
+        formasCreadas.Add(nuevaForma);
+
         
+    }
+
+    void CrearLinea (GameObject primeraForma, GameObject segundaForma)
+    {
+        GameObject nuevaLinea = new GameObject("Linea");
+
+        LineRenderer linea = nuevaLinea.AddComponent<LineRenderer>();
+
+        linea.positionCount = 2;
+
+        linea.SetPosition(0,primeraForma.transform.position);
+        linea.SetPosition(1,segundaForma.transform.position);
+
+        linea.sortingOrder = 1;
+
+        linea.startColor = Color.blue;
     }
 }
